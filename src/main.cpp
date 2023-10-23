@@ -4,12 +4,15 @@ int semaforos[3][3] = {{13, 12, 14}, {27, 26, 25}, {33, 32, 2}};
 int cantLed = 3;
 int delayTime = 1000; 
 int delayParpadeo = 500;
-int parpadeo = 0;
-
+int parpadeo = 1;
+int ledParpadeo = 0;
+ 
 String leds[3] = {"v", "a", "r"};
 String encender = "E";
 String parar = "P";
 
+
+// Semaforo reflejo
 void encenderSemaforo(int semaforos[3][3], int tiempoRetardo){
     for(int j = 0; j < cantLed; j++){
         for(int i = 0; i < cantLed; i++){
@@ -17,9 +20,11 @@ void encenderSemaforo(int semaforos[3][3], int tiempoRetardo){
         }
         Serial.println(leds[j] + "-1");
         delay(tiempoRetardo);
-        if(j == 0){
-            parpadeo = 0;
-            while(parpadeo < 3){
+        if(j ==  1){
+            parpadeo = 1;
+
+
+            while(parpadeo < 3 ){
                 for(int i = 0; i < cantLed; i++){
                     digitalWrite(semaforos[i][j], LOW);
                 }
@@ -32,6 +37,8 @@ void encenderSemaforo(int semaforos[3][3], int tiempoRetardo){
                 delay(delayParpadeo);
                 parpadeo++;
             }
+
+
         }
         for(int i = 0; i < cantLed; i++){
             digitalWrite(semaforos[i][j], LOW);
@@ -79,28 +86,28 @@ void loop() {
 
 
 
-// ! SEMAFORO EN SERIE
+// ! Semaforo en serie
+//  void encenderSemaforo(int semaforos[3][3], int tiempoRetardo){
 
-//! void encenderSemaforo(int semaforos[3][3], int tiempoRetardo){
+//      for(int i = 0; i < cantLed; i++){
+//        for(int j = 0; j < cantLed; j++){
+//          int primerElemento = semaforos[i][0];
+//          digitalWrite(semaforos[i][j], HIGH);
+//          delay(tiempoRetardo);
+//          if(j == 0){
+//            parpadeo = 0;
 
-//!     for(int i = 0; i < numeroSemaforos; i++){
-//!       for(int j = 0; j < numeroSemaforos; j++){
-//!         int primerElemento = semaforos[i][0];
-//!         digitalWrite(semaforos[i][j], HIGH);
-//!         delay(tiempoRetardo);
-//!         if(j == 0){
-//!           parpadeo = 0;
+//            while(parpadeo < 3){
+//              digitalWrite(primerElemento, LOW);
+//              delay(delayParpadeo);
+//              digitalWrite(primerElemento, HIGH);
+//              delay(delayParpadeo);
+//              parpadeo++;
+//            }
+//          }
+//          digitalWrite(semaforos[i][j], LOW);
+//        }
+//      }
+//  }
 
-//!           while(parpadeo < 3){
-//!             digitalWrite(primerElemento, LOW);
-//!             delay(delayParpadeo);
-//!             digitalWrite(primerElemento, HIGH);
-//!             delay(delayParpadeo);
-//!             parpadeo++;
-//!           }
-//!         }
-//!         digitalWrite(semaforos[i][j], LOW);
-//!       }
-//!     }
-//! }
 
